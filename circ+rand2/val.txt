@@ -1,0 +1,4 @@
+109 iter until all points visited
+
+150 total
+
