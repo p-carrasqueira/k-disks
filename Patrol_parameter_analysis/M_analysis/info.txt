@@ -1,7 +1,7 @@
 The times until all Anchor Points are scanned for different m, with n=50, d_j=10m and alpha=0.6:
-10_60_4M    -> 378
-10_60_25M   -> 137
-10_60_75M   -> 94
-10_60_150M  -> 86
+10_60_4M    -> m=4    -> 378
+10_60_25M   -> m=25   -> 137
+10_60_75M   -> m=75   -> 94
+10_60_150M  -> m=150  -> 86
 
 For m=75 the videos and images are the same found in N_analysis/10_60_50N

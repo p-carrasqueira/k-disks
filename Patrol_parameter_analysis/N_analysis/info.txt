@@ -1,8 +1,8 @@
 The times until all Anchor Points are scanned for different n, with m=75, d_j=10m and alpha=0.6:
-10_60_25N  -> 188
-10_60_50N  -> 94
-10_60_75N  -> 209
-10_60_100N -> 162
+10_60_25N  -> n=25   -> 188
+10_60_50N  -> n=50   -> 94
+10_60_75N  -> n=75   -> 209
+10_60_100N -> n=100  -> 162
 update     -> 169
 
 
