@@ -1,3 +1,4 @@
+%% Point placement and sensor parameter
 height=100;
 width=100;
 
@@ -8,44 +9,38 @@ bound=cat(1,bound,[width 0]);
 bound=cat(1,bound,[width height]);
 bound=cat(1,bound,[0 height]);
 bound=cat(1,bound,[0 0]);
-%
-% Parametros do modelo
-% d=[2;5;5;5;5;10;10;10;10;10];        % Distancia ate a qual todos os pontos estão cobertos 
-% k=[0.05;0.05;0.05;0.05;0.05;0.04;0.04;0.04;0.04;0.04];     % Parametro para decaimento
 
+% Sensor model parameter
 d=5*ones(n_sensors,1);
 k=.05*ones(n_sensors,1);
 
-% Probabilidades de detecao
-prob_p=1.0;   % Probabilidade de detecao dos pontos
-prob_t=0.8;   % Probabilidade de detecao da area total requerida
+% Detection probability
+prob_p=1.0;   % Point probability
+prob_t=0.8;   % Area probability
 
+% Ranges definition
 R=ones(n_sensors,1);
 R_t=ones(n_sensors,1);
 L=ones(n_sensors,1);
-
-
 for i=1:size(d,1)
-    R(i)=-log(prob_p)/k(i)+d(i);         % Range maxima para garantir os pontos cobertos com prob_p
+    R(i)=-log(prob_p)/k(i)+d(i);      
     R_t(i)=-log(prob_t)/k(i)+d(i);
-    L(i)=-log(prob_t/prob_p)/k(i);    % Se os pontos tem prob_p a distancia entre pontos necessaria
-                                % para garantir prob_t e L
+    L(i)=-log(prob_t/prob_p)/k(i);    
 end
 
 L=min(L);
 
-l=sqrt(L^2/2);      % Largura de um quadrado com diagonal L
+l=sqrt(L^2/2);      % Grid side maximum size 
 pos=l;
 points=[];
-% l=[l l];       % Posicao inicial de criacao dos pontos
-maxi=0;  % Posicao maxima possivel para os pontos da primeira linha em x
-maxi2=0; % Posicao maxima possivel para os pontos da primeira linha em y
+maxi=0;    % Maximum point position of first line of x
+maxi2=0;   % Maximum point position of first line of y
 
 tolerance=1/2;
 primeira=1;
 firstx=0;
 
-% Criacao dos pontos 
+% Point placement 
 while (maxi-firstx)<width
     line=[];
     aux1=maxi-rand*(tolerance*l);
@@ -57,7 +52,7 @@ while (maxi-firstx)<width
         aux1=maxi-rand*(tolerance*l);
         aux2=maxi2-rand*(tolerance*l);
     end
-%    line=cat(1,line, [aux1 aux2] );
+    % Center points of line
     d=max(line(:,2));
     d2=min(line(:,2));
     d=(height-d+d2)/2;
@@ -72,19 +67,15 @@ while (maxi-firstx)<width
     points=cat(1,points, line );
 end
 
-% % Centralizacao dos pontos
+% Center points in width 
 d=max(points(:,1));
 d2=min(points(:,1));
 d=(-d+width+d2)/2;
 M=cat(2,ones(size(points,1),1),zeros(size(points,1),1));
 points=points-d2*M+d*M;
  
-% d=max(points(:,2));
-% d2=min(points(:,2));
-% d=(height-d+d2)/2;
-% M=cat(2,zeros(size(points,1),1),ones(size(points,1),1));
-% points=points-d2*M+d*M;
-%%
+%% Point Placement plot
+
 fh = figure('rend','painters','pos',[10 10 400 300]); % por lado a lado
 %fh = figure('rend','painters','pos',[10 10 300 200]); 
 hold on
@@ -104,12 +95,12 @@ ylabel('$y$ (m)','Interpreter','latex','FontSize',10);
 hold off
 
 
-%% Sensors
+%% Area Coverage solution
 
 sensors=zeros(n_sensors,2);
 
 trys=20;
-% Cell com posicoes escolhidas na primeira coluna e sum(opt_val) na segunda
+% Cell with positions ans sum(opt_val) 
 possible=cell(trys,2);
 l_scan=ones(size(points,1),1);
 minimum=+inf;
@@ -134,11 +125,9 @@ for i=1:trys
         s_closer=closer;
     end
 end
-minimum
+
 closer=s_closer;
-
-
-%%
+%% Area Coverage plot
 %
 %fh = figure;
 fh = figure('rend','painters','pos',[10 10 300 300]); % por lado a lado
@@ -165,39 +154,34 @@ xlabel('$x$ (m)','Interpreter','latex','FontSize',10);
 ylabel('$y$ (m)','Interpreter','latex','FontSize',10);
 hold off
 
-
-
-
-
-
-%% At each time stamp
+%% Patroll/ Tracking
 %load('Data_s.mat');
 time=120;
 
-%intruder=[size(points,1)+1;size(points,1)+2];
+% If intruders are considered this is where we first define them
+% intruder=[size(points,1)+1;size(points,1)+2];
 intruder=[size(points,1)+1];
 
-%x_c=50;
-%y_c=50;
+% x_c=50;
+% y_c=50;
 
 
-%points=[points;[x_c y_c];[25 75]];
-%points=[points;[50 50]];
-%r=5;
-%t=0;
-%v=2;
+% points=[points;[x_c y_c];[25 75]];
+% points=[points;[50 50]];
+% r=5;
+% t=0;
+% v=2;
 
 weights=ones(size(points,1),1);
-%weights(end)=0;
-%weights(end-1)=0;
-
+% weights(end)=0;
+% weights(end-1)=0;
 
 l_scan=ones(size(points,1),1);
 size(points)
 % l_scan=[l_scan; 0];
 
 % p_sensors=randi([0 50],3,2);
-% sensors=p_sensors;	% Usada para utilizar sempre o mesmo ponto inicial
+sensors=p_sensors;	% Usada para utilizar sempre o mesmo ponto inicial
 
 aux=[];
 all_sensors=cell(1,time);
@@ -241,12 +225,13 @@ for i=1:time
 %    l_scan(end-1)=2;
 
 
-    % Encontrar momento em que ja estao todos e parar
+%     Stop if all were covered
     a=aux(:,i)<i;
     if (sum(a)==size(aux,1))
         break;
     end
     sum(a)
+
 % i=i+1;
 end
 

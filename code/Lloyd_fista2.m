@@ -3,8 +3,8 @@ function [sensors,closer,distancias] = Lloyd_fista2(sensors,points,n_sensors,R,c
 %   [sensors,sum_optval,closer] = Lloyd_fista(sensors,points,n_sensors,R,coefficients)
 %   Lloyd_fista solves the k-means minimization problem usinf FISTA for a n_sensors,
 %   a set of sensors and a set of points where each sensor as a range R.
-%   Returns the sensors position and the closer
-%   points from each sensor.
+%   Returns the sensors position and the closer points from each sensor.
+%   Takes into consideration the limits of movement
 %
     previous = -5*ones(size(sensors));
 

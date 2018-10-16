@@ -6,14 +6,12 @@ function sensors = kplusplus(n_sensors,points)
 %   Returns the sensors positions.
 %
 
-    % Escolher a posicao do primeiro random de todos os pontos to cover
+    % First position chosen randomly
     sensors=points(randi(size(points,1)),:);
     
-    % Comecando no segundo sensor atribuir posicoes para os restantes 
     for j=2:n_sensors
         dist=[];
-        % Inicializacao das probabilidades atraves das distancias dos
-        % pontos relativamente ao que esta mais perto
+        % Inicialize probabilities of the algorithm
         for k=1:size(points,1)
             aux=norm(sensors(1,:)-points(k,:));
             for l=2:j-1
@@ -25,16 +23,15 @@ function sensors = kplusplus(n_sensors,points)
         end
         dist=dist.^2;
         dist=dist/sum(dist);
-        % Escolha do valor da proxima posicao
+        % Selecting position according to probabilities 
         aux=0;
-        valor=rand; % Numero aleatorio uniformemente distribuido entre [0:1]
+        valor=rand; 
         k=0;
-        while aux<valor % Quando as somas das probabilidades for superior ao rand estamos no limite
+        while aux<valor
             k=k+1;
             aux=aux+dist(k);
         end
         sensors=cat(1,sensors,points(k,:)); 
     end
-    
-
+   
 end

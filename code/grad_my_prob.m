@@ -1,8 +1,11 @@
 function soma=grad_my_prob(x,points,R,weights,index,l_scan)
+%   soma=grad_my_prob(x,points,R,weights,index,l_scan)
+%   Uses the set of points, the sensors range and the sensors position to 
+%   compute the gradient of the problem
+%
     soma=0;
-%     fprintf('begin\n');
     for ii=1:size(points,1)
-        soma=soma+2*min(1,l_scan(index(ii)))*weights(index(ii))*(x - proj_ball(points(ii,:),R,x));
+        soma=soma+2*weights(index(ii))*(x - proj_ball(points(ii,:),R,x));
         
 %         fprintf('l_scan=%f\t we=%f\t ind=%d\n',l_scan(index(ii)),weights(index(ii)),index(ii));
 %         proj=proj_ball(points(ii,:),R,x);

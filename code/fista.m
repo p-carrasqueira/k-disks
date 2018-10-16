@@ -1,5 +1,7 @@
 function [x,iter,todas]= fista(grad,prox,x_0,t)
-
+%   Function that given a gradient, a prox operator, initial soluiton and
+%   step returns the solution of a convex optimization problem
+%
     iter=0;
     x=x_0;
     x_2=x_0;

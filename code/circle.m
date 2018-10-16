@@ -1,3 +1,5 @@
+%% Point placement in a circle
+
 height=50;
 width=50;
 

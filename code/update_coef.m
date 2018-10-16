@@ -1,8 +1,10 @@
 function [weights,l_scan] = update_coef(n_sensors,weights,l_scan,closer,R,distancias,intruder,l_sensors,sensors,time)
+%   [weights,l_scan] = update_coef(n_sensors,weights,l_scan,closer,R,distancias,intruder,l_sensors,sensors,time)
+%   Update weights and time of last scan (l_scan) of the anchor points 
 
 
-n=50;    % Factor potencia da distancia
-m=75;    % Factor potencia do tempo
+n=50;    % Spatial coefficient
+m=75;    % Time coefficient
 sigma=0;
 
 for i=1:n_sensors
@@ -15,7 +17,7 @@ for i=1:n_sensors
 %                   fprintf('>R\t ind=%d\t dist=%.2f\tR=%.2f\n',closer{i,2}(j),distancias(closer{i,2}(j)),R(i))
                 l_scan(closer{i,2}(j))=l_scan(closer{i,2}(j))+1;
             end
-            % Colocar a zero os do path
+            % Scan the path
             if time>1
                 t=sum((closer{i,1}(j,:)-l_sensors(i,:)).*(sensors(i,:)-l_sensors(i,:)))/(norm(sensors(i,:)-l_sensors(i,:))^2);
                 dist=norm(l_sensors(i,:)+t*(sensors(i,:)-l_sensors(i,:)) -closer{i,1}(j,:));
