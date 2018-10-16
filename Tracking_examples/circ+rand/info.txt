@@ -1,0 +1,4 @@
+2 Targets performing random bounded and circular with increasing radius.
+
+139 iterations until all Anchor Points scanned
+

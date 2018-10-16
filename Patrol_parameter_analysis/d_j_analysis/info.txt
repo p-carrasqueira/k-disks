@@ -1,0 +1,8 @@
+The times until all Anchor Points are scanned for different d_j, with n=50, m=75 and alpha=0.7: 
+
+7.5m -> 334
+10m  -> 94
+15m  -> 64
+20m  -> 44
+50m  -> 39
+inf  -> 39

@@ -1,0 +1,4 @@
+Single target performing linear trajectory
+
+120 iterations until all Anchor Points scanned
+

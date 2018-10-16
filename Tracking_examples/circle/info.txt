@@ -1,0 +1,5 @@
+Single target performing circular trajectory with increasing radius
+
+89 iterations until all Anchor Points are scanned
+
+Only 150 iterations are considered
