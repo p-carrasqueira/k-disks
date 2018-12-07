@@ -18,9 +18,11 @@ To better understand the reasoning behind the different parameter and the differ
 
 Each directory has a "info.txt" file where information regarding the simulations results and parameters are found. 
 
-For the tracking examples the parameters used are always the same: m=50, n=75, alpha=0.7, d_j=10m and N=1000. 
+For tracking, the parameters used are always the same: m=50, n=75, alpha=0.7, d_j=10m and N=1000. 
 
 ## Code
+
+
 
 
 
